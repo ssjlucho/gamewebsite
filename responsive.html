@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Videojuego - Unreal Engine 5</title>
+    <style>
+        /* Reseteo de estilos */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #0d0d0d;
+            color: #f5f5f5;
+            overflow-x: hidden;
+        }
+
+        /* Header con efecto Parallax y degradado */
+        header {
+            position: relative;
+            height: 100vh;
+            background: linear-gradient(135deg, #1a1a1a 0%, #3b004d 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1;
+            animation: bgPulse 6s infinite;
+        }
+
+        header h1 {
+            position: relative;
+            font-size: 4rem;
+            z-index: 2;
+            color: #cf73e0;
+            animation: float 4s ease-in-out infinite, fadeInText 3s ease-out;
+            transition: transform 0.5s ease, font-size 0.5s ease;
+        }
+
+        header p {
+            position: relative;
+            z-index: 2;
+            color: #f5f5f5;
+            font-size: 1.5rem;
+            margin-top: 1rem;
+            animation: fadeInText 4s ease-in-out;
+            transition: opacity 0.5s ease;
+        }
+
+        /* Menú de navegación con efectos de scroll */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 2rem;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+
+        nav a {
+            color: #e08fff;
+            text-decoration: none;
+            margin: 0 1rem;
+            font-size: 1.2rem;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #cf73e0;
+            transform: scale(1.1);
+        }
+
+        /* Sección con animaciones de slide-in */
+        section {
+            padding: 5rem 2rem;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s ease-in-out;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: #d784ff;
+            animation: slideIn 1.5s ease-out;
+        }
+
+        section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            color:#f5f5f5;
+            transition: transform 0.3s ease;
+        }
+
+        section p:hover {
+            transform: scale(1.05);
+            color: #e08fff;
+        }
+
+        /* Equipo con hover effects */
+        .team {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .team-member {
+            text-align: center;
+            transform: translateY(0);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            padding: 1rem;
+            border-radius: 10px;
+            background-color: #1a1a1a;
+        }
+
+        .team-member:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(255, 0, 255, 0.2);
+            background-color: #3b004d;
+        }
+
+        .team-member img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            transition: transform 0.3s ease;
+        }
+
+        .team-member:hover img {
+            transform: scale(1.1);
+        }
+
+        /* CTA con animación flotante */
+        .cta {
+            text-align: center;
+            padding: 3rem 0;
+            background: linear-gradient(135deg, #1f1f1f 0%, #3b004d 100%);
+            animation: ctaPulse 4s infinite;
+        }
+
+        .cta h2 {
+            color: #cf73e0;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .cta button {
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            border: none;
+            background-color: #cf73e0;
+            color: #fff;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .cta button:hover {
+            transform: scale(1.1);
+            background-color: #e08fff;
+        }
+
+        /* Animaciones */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInText {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bgPulse {
+            0%, 100% {
+                background: rgba(0, 0, 0, 0.6);
+            }
+            50% {
+                background: rgba(59, 0, 77, 0.8);
+            }
+        }
+
+        @keyframes ctaPulse {
+            0%, 100% {
+                background-color: #3b004d;
+            }
+            50% {
+                background-color: #cf73e0;
+            }
+        }
+
+        /* Media Queries para diseño responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.5rem;
+            }
+
+            header p {
+                font-size: 1rem;
+            }
+
+            nav a {
+                font-size: 1rem;
+            }
+
+            section h2 {
+                font-size: 2rem;
+            }
+            .team-member img {
+                width: 100px;
+                height: 100px;
+            }
+
+            .cta h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navegación -->
+    <nav>
+        <a href="#unreal-engine">Unreal Engine 5</a>
+        <a href="#panels">Paneles</a>
+        <a href="#blueprints">Blueprints</a>
+        <a href="#nosotros">Nosotros</a>
+    </nav>
+
+    <!-- Header con Parallax -->
+    <header>
+        <div>
+            <h1>Videojuego - Unreal Engine 5</h1>
+            <p>Descubre las herramientas detrás de su desarrollo</p>
+        </div>
+    </header>
+
+    <!-- Sección Unreal Engine 5 -->
+    <section id="unreal-engine">
+        <h2>Unreal Engine 5</h2>
+        <p>Motor gráfico de última generación creado por Epic Games. Permite a los desarrolladores crear mundos
+            increíblemente detallados y realistas, tanto para videojuegos como para aplicaciones interactivas.</p>
+    </section>
+
+    <!-- Sección Paneles de Unreal Engine 5 -->
+    <section id="panels">
+        <h2>Paneles en Unreal Engine 5</h2>
+        <p><b>Viewport:</b> El espacio donde puedes visualizar y manipular tus escenas en tiempo real.</p>
+        <p><b>Outliner:</b> Lista jerárquica de todos los objetos en la escena, útil para organizar y seleccionar
+            elementos.</p>
+        <p><b>Panel de Detalles:</b> Muestra las propiedades de los objetos seleccionados, permitiendo ajustes
+            precisos.</p>
+    </section>
+
+    <!-- Sección Blueprints -->
+    <section id="blueprints">
+        <h2>Blueprints</h2>
+        <p><b>¿Qué son los Blueprints?</b> Son un sistema de scripting visual que permite crear lógica y comportamientos
+            sin escribir código, usando un sistema de nodos visuales.</p>
+    </section>
+
+    <!-- Sección Nosotros -->
+    <section id="nosotros">
+        <h2>Nosotros</h2>
+        <div class="team">
+            <div class="team-member">
+                <img src="https://via.placeholder.com/150" alt="Miembro 1">
+                <h3>Nombre 1</h3>
+                <p>Programador</p>
+            </div>
+            <div class="team-member">
+                <img src="https://via.placeholder.com/150" alt="Miembro 2">
+                <h3>Nombre 2</h3>
+                <p>Diseñador</p>
+            </div>
+            <div class="team-member">
+                <img src="https://via.placeholder.com/150" alt="Miembro 3">
+                <h3>Nombre 3</h3>
+                <p>Director Creativo</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action (CTA) -->
+    <section class="cta">
+        <h2>¿Listo para explorar más?</h2>
+        <p>Con Unreal Engine 5 y Blueprints, el límite está en tu imaginación. ¡Empieza a crear ahora!</p>
+        <button>Comenzar ahora</button>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Videojuego. Desarrollado con Unreal Engine 5.</p>
+    </footer>
+
+    <script>
+        // Animación con scroll para mostrar las secciones
+        const sections = document.querySelectorAll('section');
+
+        window.addEventListener('scroll', () => {
+            const triggerBottom = window.innerHeight / 5 * 4;
+            sections.forEach(section => {
+                const sectionTop = section.getBoundingClientRect().top;
+
+                if (sectionTop < triggerBottom) {
+                    section.classList.add('visible');
+                } else {
+                    section.classList.remove('visible');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
+
