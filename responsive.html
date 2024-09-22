@@ -30,6 +30,7 @@
             align-items: center;
             color: #fff;
             overflow: hidden;
+            perspective: 2px;
         }
 
         header::before {
@@ -50,30 +51,27 @@
             z-index: 2;
             color: #cf73e0;
             animation: float 4s ease-in-out infinite, fadeInText 3s ease-out;
-            transition: transform 0.5s ease, font-size 0.5s ease;
         }
 
         header p {
             position: relative;
             z-index: 2;
-            color: #f5f5f5;
             font-size: 1.5rem;
             margin-top: 1rem;
             animation: fadeInText 4s ease-in-out;
-            transition: opacity 0.5s ease;
         }
 
         /* Menú de navegación con efectos de scroll */
         nav {
             position: fixed;
-            top: 0;
+            top: -100px;
             width: 100%;
             padding: 1rem 2rem;
-            background-color: rgba(0, 0, 0, 0.9);
+            background-color: rgba(0, 0, 0, 0.8);
             z-index: 1000;
             display: flex;
             justify-content: center;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, top 0.3s ease;
         }
 
         nav a {
@@ -114,13 +112,31 @@
             font-size: 1.2rem;
             margin-bottom: 2rem;
             text-align: center;
-            color:#f5f5f5;
+            color: #f5f5f5;
             transition: transform 0.3s ease;
         }
 
         section p:hover {
             transform: scale(1.05);
             color: #e08fff;
+        }
+
+        /* Imágenes dentro de las secciones */
+        .image-container {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease;
+        }
+
+        .image-container img:hover {
+            transform: scale(1.05);
         }
 
         /* Equipo con hover effects */
@@ -172,7 +188,7 @@
             animation: float 4s ease-in-out infinite;
         }
 
-        .cta button {
+        .cta a {
             padding: 1rem 2rem;
             font-size: 1.2rem;
             border: none;
@@ -224,31 +240,23 @@
             }
         }
 
-        @keyframes fadeInText {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
         @keyframes bgPulse {
-            0%, 100% {
+            0%,
+            100% {
                 background: rgba(0, 0, 0, 0.6);
             }
+
             50% {
                 background: rgba(59, 0, 77, 0.8);
             }
         }
 
         @keyframes ctaPulse {
-            0%, 100% {
+            0%,
+            100% {
                 background-color: #3b004d;
             }
+
             50% {
                 background-color: #cf73e0;
             }
@@ -271,6 +279,7 @@
             section h2 {
                 font-size: 2rem;
             }
+
             .team-member img {
                 width: 100px;
                 height: 100px;
@@ -288,8 +297,8 @@
     <!-- Navegación -->
     <nav>
         <a href="#unreal-engine">Unreal Engine 5</a>
-        <a href="#panels">Paneles</a>
-        <a href="#blueprints">Blueprints</a>
+        <a href="#features">Características</a>
+        <a href="#tech">Tecnología</a>
         <a href="#nosotros">Nosotros</a>
     </nav>
 
@@ -308,21 +317,42 @@
             increíblemente detallados y realistas, tanto para videojuegos como para aplicaciones interactivas.</p>
     </section>
 
-    <!-- Sección Paneles de Unreal Engine 5 -->
-    <section id="panels">
-        <h2>Paneles en Unreal Engine 5</h2>
-        <p><b>Viewport:</b> El espacio donde puedes visualizar y manipular tus escenas en tiempo real.</p>
-        <p><b>Outliner:</b> Lista jerárquica de todos los objetos en la escena, útil para organizar y seleccionar
-            elementos.</p>
-        <p><b>Panel de Detalles:</b> Muestra las propiedades de los objetos seleccionados, permitiendo ajustes
-            precisos.</p>
+    <!-- Sección Características Unreal Engine 5 -->
+    <section id="features">
+        <h2>Características Principales</h2>
+        <p><b>Lumen:</b> Sistema de iluminación global dinámico que permite a los desarrolladores crear entornos con iluminación realista y ajustable en tiempo real.</p>
+        <div class="image-container">
+            <img src="lumen.webp" alt="Sistema de iluminación Lumen">
+        </div>
+        <p><b>Nanite:</b> Tecnología de renderizado de geometría virtualizada que permite mostrar millones de polígonos en tiempo real, brindando detalles extraordinarios sin sacrificar rendimiento.</p>
+        <div class="image-container">
+            <img src="nanite.webp" alt="Tecnología Nanite en Unreal Engine 5">
+        </div>
+        <p><b>Chaos Physics y Destruction:</b> Un avanzado motor de físicas que permite crear simulaciones realistas de destrucción y colisiones.</p>
+        <div class="image-container">
+            <img src="chaos.png" alt="Chaos Physics y Destruction">
+        </div>
+        <p><b>Metahumans:</b> Herramienta para crear personajes humanos extremadamente realistas con alta fidelidad en detalles y animaciones.</p>
+        <div class="image-container">
+            <img src="human.avif" alt="Unreal Engine 5 Imagen de Metahumans">
+        </div>
     </section>
 
-    <!-- Sección Blueprints -->
-    <section id="blueprints">
-        <h2>Blueprints</h2>
-        <p><b>¿Qué son los Blueprints?</b> Son un sistema de scripting visual que permite crear lógica y comportamientos
-            sin escribir código, usando un sistema de nodos visuales.</p>
+    <!-- Sección Tecnología Unreal Engine 5 -->
+    <section id="tech">
+        <h2>Tecnología Detrás de Unreal Engine 5</h2>
+        <p><b>Ray Tracing:</b> Trazado de rayos en tiempo real para simulación de luces, sombras y reflejos ultra realistas.</p>
+        <div class="image-container">
+            <img src="ray.webp" alt="Tecnología de Ray Tracing en Unreal Engine">
+        </div>
+        <p><b>Virtual Production:</b> Utilizado ampliamente en la producción cinematográfica, esta tecnología permite crear entornos virtuales interactivos en tiempo real para películas y series.</p>
+        <div class="image-container">
+            <img src="virtual.webp" alt="Virtual Production en Unreal Engine">
+        </div>
+        <p><b>Open Worlds:</b> Herramientas optimizadas para crear mundos abiertos enormes sin comprometer el rendimiento, gracias a tecnologías como World Partition que maneja la carga dinámica de grandes escenarios.</p>
+        <div class="image-container">
+            <img src="open.webp" alt="Open Worlds en Unreal Engine 5">
+        </div>
     </section>
 
     <!-- Sección Nosotros -->
@@ -351,7 +381,7 @@
     <section class="cta">
         <h2>¿Listo para explorar más?</h2>
         <p>Con Unreal Engine 5 y Blueprints, el límite está en tu imaginación. ¡Empieza a crear ahora!</p>
-        <button>Comenzar ahora</button>
+        <a href="https://www.unrealengine.com/en-US/unreal-engine-5">Comenzar ahora</a>
     </section>
 
     <!-- Footer -->
@@ -362,6 +392,7 @@
     <script>
         // Animación con scroll para mostrar las secciones
         const sections = document.querySelectorAll('section');
+        const nav = document.querySelector('nav');
 
         window.addEventListener('scroll', () => {
             const triggerBottom = window.innerHeight / 5 * 4;
@@ -374,9 +405,15 @@
                     section.classList.remove('visible');
                 }
             });
+
+            // Mostrar/ocultar la navegación al hacer scroll
+            if (window.scrollY > 100) {
+                nav.style.top = "0";
+            } else {
+                nav.style.top = "-100px";
+            }
         });
     </script>
 </body>
 
 </html>
-
